@@ -6,6 +6,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog");
+const expressLayouts = require("express-ejs-layouts");
 
 const app = express();
 const mongoose = require("mongoose");
@@ -20,6 +21,7 @@ async function main() {
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(expressLayouts);
 
 app.use(logger("dev"));
 app.use(express.json());

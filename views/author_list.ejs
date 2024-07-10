@@ -1,0 +1,22 @@
+<h1><%= title%></h1>
+
+<% if (author_list.length) { %>
+  <ul>
+    <% author_list.forEach(author => { %>
+      <% const name = author.name; %>
+      <% const url = author.url; %>
+      <% const date_of_birth = author.date_of_birth_formatted; %>
+      <% const date_of_death = author.date_of_death_formatted; %>
+
+      <li>
+        <a href="<%= url %>"><%= name %></a> 
+        (
+          <%= date_of_birth %> 
+          <%= date_of_death ? ` - ${date_of_death}` : "" %>
+        )
+      </li>
+     <% })%>
+  </ul>
+<% } else {%>
+  <p>There are no authorsa</p>
+<% } %>
