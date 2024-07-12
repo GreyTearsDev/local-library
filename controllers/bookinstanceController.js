@@ -25,7 +25,7 @@ exports.bookinstance_detail = asyncHandler(async (req, res, next) => {
   }
 
   res.render("bookinstance_detail", {
-    title: "Book:",
+    title: "Book Instance:",
     bookinstance: bookInstance,
   });
 });
@@ -168,7 +168,6 @@ exports.bookinstance_update_post = [
         errors: errors.array(),
       });
     } else {
-      console.log("got here");
       const updatedBookInstance = await BookInstance.findByIdAndUpdate(
         req.params.id,
         bookinstance,
