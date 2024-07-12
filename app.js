@@ -7,11 +7,21 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog");
 const expressLayouts = require("express-ejs-layouts");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const app = express();
+
+// Set up rate limiter: maximum of twenty requests per minute
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = require("./uri");
+const mongoDB = process.env.MONGODB_URI || require("./uri");
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -23,6 +33,17 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 
+// Apply rate limiter to all requests
+app.use(limiter);
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+);
+app.use(compression());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
