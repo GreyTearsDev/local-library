@@ -1,1 +1,1 @@
-[Live preview](https://proud-jazzy-wave.glitch.me/catalog/books)
+[Live preview](https://proud-jazzy-wave.glitch.me/catalog)
